@@ -3,12 +3,21 @@ import { sendError } from "./mensagens";
 // Definição do erro personalizado da API
 export class APIError extends Error {
   code: number;
-  errors: any[];
+  errors?: any[];
 
-  constructor(errors: any[], code: number = 400, options?: ErrorOptions) {
-    super(errors ? errors[0]?.message : "Erro com código " + code, options);
-    this.code = errors?.[0]?.code || code;
-    this.errors = errors;
+  constructor(message: string | any[], code: number = 400, errors?: any[]) {
+    // Se 'message' for um array, mantém como array no campo 'errors'
+    if (Array.isArray(message)) {
+      super("Erro de validação"); // Define uma mensagem genérica para o campo 'message'
+      this.errors = message; // Armazena o array de erros no campo 'errors'
+    } else {
+      super(message); // Caso contrário, usa a mensagem diretamente
+      this.errors = errors; // Armazena os erros adicionais, se fornecidos
+    }
+
+    // Configura o protótipo para que o stack trace funcione corretamente
+    Object.setPrototypeOf(this, new.target.prototype);
+    this.code = code;
   }
 }
 

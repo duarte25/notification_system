@@ -3,8 +3,7 @@ import Usuario, { ICriarUsuario, IUsuario } from "../models/Usuario";
 export default class UsuarioRepository {
 
   static async criarUsuario(data: ICriarUsuario) {
-    const novoUsuario = await Usuario.create(data);
-    return novoUsuario;
+    return await Usuario.create(data);
   }
 
   static async atualizarUsuario(id: string, data: Partial<ICriarUsuario>): Promise<IUsuario | null> {
@@ -12,12 +11,14 @@ export default class UsuarioRepository {
   }
 
   static async listarUsuarios(filtro: any = {}) {
-    const usuarios = await Usuario.find(filtro);
-    return usuarios;
+    return await Usuario.find(filtro);
+  }
+
+  static async listarUsuarioID(id: string) {
+    return await Usuario.findById(id);
   }
 
   static async deletarUsuario(id: string) {
-    const usuario = await Usuario.findByIdAndDelete(id);
-    return usuario;
+    return await Usuario.findByIdAndDelete(id);
   }
 }

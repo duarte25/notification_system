@@ -1,12 +1,12 @@
 import express, { Express } from "express";
-// import db from "./config/db_config";
+import db from "./config/db_config";
 import routes from "./routes/index";
 import cors from "cors";
 
 const app: Express = express();
 
 // Conectar ao banco de dados
-// db.conectarBanco();
+db.conectarBanco();
 
 // Middleware e rotas
 app.use(cors());

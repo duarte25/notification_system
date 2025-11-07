@@ -53,4 +53,18 @@ export default class UsuarioService {
 
     return updatedUser;
   }
+
+  static async listarUsuarioID(id: string) {
+
+    const uuidPrismaTest = v.toMongooseObj({ model: Usuario, query: { _id: id } })
+
+    if (!uuidPrismaTest) throw new APIError(uuidPrismaTest, 404);
+
+    const userData = await UsuarioRepository.listarUsuarioID(id);
+
+    if (!userData) throw new APIError("Usuário não encontrado.", 404);
+
+    return userData;
+  }
+
 }

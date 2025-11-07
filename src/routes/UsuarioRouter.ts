@@ -6,7 +6,7 @@ const router = express.Router();
 
 router
   // .get("/users", wrapException(UsuarioController.listUserController))
-  // .get("/users/:id", wrapException(UsuarioController.findUser))
+  .get("/users/:id", wrapException(UsuarioController.listarUsuarioID))
   .post("/users", wrapException(UsuarioController.CriarUsuario))
   .patch("/users/:id",wrapException(UsuarioController.alterarUsuario))
   // .delete("/users/:id", wrapException(UsuarioController.deleteUser));
