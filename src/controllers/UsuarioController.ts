@@ -26,36 +26,24 @@ export default class UsuarioController {
 
   // Método para listar usuários
   static async listarUsuario(req: Request<{}, {}, {}, QueryParams>, res: Response): Promise<Response> {
-    const pagina = parseInt(req.query.pagina as string) || 1;
-    const limite = parseInt(req.query.limite as string) || paginateOptions.limit;
+    const pagina = parseInt(req.query.pagina ?? "1");
+    const limite = parseInt(req.query.limite ?? paginateOptions.limit.toString());
+
     const { nome, email } = req.query;
 
-    // Filtros para a pesquisa
-    const filtros: Record<string, any> = {};
+    const usuarios = await UsuarioService.listarUsuarios({ nome, email, pagina, limite });
 
-    if (nome) {
-      filtros.$text = {
-        $search: nome,
-        $caseSensitive: false,
-        $diacriticSensitive: false,
-        $language: "pt"
-      };
-    }
-
-    if (email) filtros.email = email;
-
-    const usuario = await Usuario.paginate(
-      filtros,
-      {
-        ...paginateOptions,
-        page: pagina,
-        limit: limite,
-        sort: { _id: -1 },
-        lean: true,
-      }
-    );
-
-    return sendResponse(res, 200, { data: usuario });
+    return sendResponse(res, 200, {
+      data: {
+        usuarios: usuarios.docs,
+        paginacao: {
+          total: usuarios.totalDocs,
+          paginas: usuarios.totalPages,
+          paginaAtual: usuarios.page,
+          limite: usuarios.limit,
+        },
+      },
+    });
   }
 
   static async listarUsuarioID(req: Request, res: Response): Promise<Response> {
@@ -72,7 +60,7 @@ export default class UsuarioController {
 
     const usuarioData: Partial<ICriarUsuario> = { ...req.body };
 
-   const result = await UsuarioService.alterarUsuario(id, usuarioData);
+    const result = await UsuarioService.alterarUsuario(id, usuarioData);
 
     return sendResponse(res, 200, { data: result });
   }

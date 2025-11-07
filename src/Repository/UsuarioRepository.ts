@@ -10,8 +10,13 @@ export default class UsuarioRepository {
     return await Usuario.findByIdAndUpdate(id, data, { new: true });
   }
 
-  static async listarUsuarios(filtro: any = {}) {
-    return await Usuario.find(filtro);
+  static async listarUsuarios(filtro: any = {}, page = 1, limit = 10) {
+    return await Usuario.paginate(filtro, {
+      page,
+      limit,
+      sort: { _id: -1 },
+      lean: true,
+    });
   }
 
   static async listarUsuarioID(id: string) {

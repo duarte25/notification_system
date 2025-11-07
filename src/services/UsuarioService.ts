@@ -22,6 +22,27 @@ export default class UsuarioService {
     return newUser;
   }
 
+  static async listarUsuarios(params: { nome?: string; email?: string; pagina?: number; limite?: number }) {
+    const { nome, email, pagina = 1, limite = 10 } = params;
+
+    const filtros: Record<string, any> = {};
+
+    if (nome) {
+      filtros.$text = {
+        $search: nome,
+        $caseSensitive: false,
+        $diacriticSensitive: false,
+        $language: "pt",
+      };
+    }
+
+    if (email) filtros.email = email;
+
+    const usuarios = await UsuarioRepository.listarUsuarios(filtros, pagina, limite);
+
+    return usuarios;
+  }
+
   static async alterarUsuario(id: string, usuarioData: Partial<ICriarUsuario>): Promise<IUsuario | null> {
 
     let val = new Validation(usuarioData);

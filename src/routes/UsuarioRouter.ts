@@ -5,7 +5,7 @@ import express from 'express';
 const router = express.Router();
 
 router
-  // .get("/users", wrapException(UsuarioController.listUserController))
+  .get("/users", wrapException(UsuarioController.listarUsuario))
   .get("/users/:id", wrapException(UsuarioController.listarUsuarioID))
   .post("/users", wrapException(UsuarioController.CriarUsuario))
   .patch("/users/:id",wrapException(UsuarioController.alterarUsuario))
