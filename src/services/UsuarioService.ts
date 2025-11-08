@@ -5,7 +5,7 @@ import { APIError } from "../utils/wrapException";
 
 export default class UsuarioService {
 
-  static async criarUsuario(usuarioData: ICriarUsuario) {
+  static async criarUsuario(usuarioData: ICriarUsuario): Promise<IUsuario> {
 
     const val = new Validation(usuarioData);
 

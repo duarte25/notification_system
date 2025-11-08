@@ -15,7 +15,7 @@ export default class UsuarioController {
 
   // Método para criar usuário
   static async CriarUsuario(req: Request, res: Response): Promise<void> {
-    // Criptografando a senha
+    
     const dados: ICriarUsuario = { ...req.body };
 
     // Salvando o usuário

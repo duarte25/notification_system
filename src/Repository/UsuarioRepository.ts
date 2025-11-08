@@ -1,3 +1,4 @@
+import { PaginateResult } from "mongoose";
 import Usuario, { ICriarUsuario, IUsuario } from "../models/Usuario";
 
 export default class UsuarioRepository {
@@ -10,7 +11,7 @@ export default class UsuarioRepository {
     return await Usuario.findByIdAndUpdate(id, data, { new: true });
   }
 
-  static async listarUsuarios(filtro: any = {}, page = 1, limit = 10) {
+  static async listarUsuarios(filtro: any = {}, page = 1, limit = 10): Promise<PaginateResult<IUsuario>> {
     return await Usuario.paginate(filtro, {
       page,
       limit,

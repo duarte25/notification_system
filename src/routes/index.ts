@@ -1,6 +1,8 @@
 import logRoutes from "../middlewares/logRoutesMiddleware";
 import { Application, Request, Response } from "express";
+import notificacoes from "../routes/NotificacaoRouter";
 import usuarios from "../routes/UsuarioRouter";
+
 
 const routes = (app: Application) => {
 
@@ -11,7 +13,8 @@ const routes = (app: Application) => {
   });
 
   app.use(
-    usuarios
+    usuarios,
+    notificacoes
   );
 
 };
