@@ -69,8 +69,8 @@ export default class UsuarioController {
   static async deletarUsuario(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
-    const findUser = await Usuario.findByIdAndDelete(id);
+    const result = await UsuarioService.deletarUsuarioID(id);
 
-    return sendResponse(res, 200);
+    return sendResponse(res, 200, { data: result });
   }
 }

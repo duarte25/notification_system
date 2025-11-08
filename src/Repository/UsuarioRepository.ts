@@ -19,11 +19,11 @@ export default class UsuarioRepository {
     });
   }
 
-  static async listarUsuarioID(id: string) {
+  static async listarUsuarioID(id: string): Promise<IUsuario | null> {
     return await Usuario.findById(id);
   }
 
-  static async deletarUsuario(id: string) {
+  static async deletarUsuarioID(id: string): Promise<IUsuario | null> {
     return await Usuario.findByIdAndDelete(id);
   }
 }

@@ -88,4 +88,16 @@ export default class UsuarioService {
     return userData;
   }
 
+  static async deletarUsuarioID(id: string) {
+
+    const uuidPrismaTest = v.toMongooseObj({ model: Usuario, query: { _id: id } })
+
+    if (!uuidPrismaTest) throw new APIError(uuidPrismaTest, 404);
+
+    const userData = await UsuarioRepository.deletarUsuarioID(id);
+
+    if (!userData) throw new APIError("Usuário não encontrado.", 404);
+
+    return userData;
+  }
 }

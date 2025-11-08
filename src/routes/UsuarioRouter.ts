@@ -8,7 +8,7 @@ router
   .get("/users", wrapException(UsuarioController.listarUsuario))
   .get("/users/:id", wrapException(UsuarioController.listarUsuarioID))
   .post("/users", wrapException(UsuarioController.CriarUsuario))
-  .patch("/users/:id",wrapException(UsuarioController.alterarUsuario))
-  // .delete("/users/:id", wrapException(UsuarioController.deleteUser));
+  .patch("/users/:id", wrapException(UsuarioController.alterarUsuario))
+  .delete("/users/:id", wrapException(UsuarioController.deletarUsuario));
 
 export default router;
