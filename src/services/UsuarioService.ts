@@ -2,7 +2,7 @@ import { ValidationFuncs as v, Validation } from "../middlewares/Validation";
 import Usuario, { ICriarUsuario, IUsuario } from "../models/Usuario";
 import UsuarioRepository from "../Repository/UsuarioRepository";
 import { APIError } from "../utils/wrapException";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 export default class UsuarioService {
 

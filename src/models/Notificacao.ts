@@ -8,6 +8,7 @@ export interface INotificacao extends Document {
   lida: boolean;
   createdAt: Date;
   updatedAt: Date;
+  _version?: number;
 }
 
 export interface ICriarNotificacao extends Document {
@@ -36,6 +37,13 @@ const notificacaoSchema: Schema<INotificacao> = new mongoose.Schema(
     versionKey: "_version",
   }
 );
+
+notificacaoSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    delete ret._version;
+    return ret;
+  },
+});
 
 notificacaoSchema.index({ nome: "text" }, { default_language: "pt" });
 // Configurações para permitir paginação

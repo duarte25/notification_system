@@ -9,6 +9,7 @@ export interface IUsuario extends Document {
   senha?: string;
   createdAt: Date;
   updatedAt: Date;
+  _version?: number;
 }
 
 export interface ICriarUsuario extends Document {
@@ -44,6 +45,14 @@ const usuarioSchema: Schema<IUsuario> = new mongoose.Schema(
     versionKey: "_version",
   }
 );
+
+usuarioSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    delete ret.senha;
+    delete ret._version;
+    return ret;
+  },
+});
 
 usuarioSchema.index({ nome: "text" }, { default_language: "pt" });
 // Configurações para permitir paginação

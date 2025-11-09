@@ -4,11 +4,7 @@ import { PaginateResult } from "mongoose";
 export default class UsuarioRepository {
 
   static async criarUsuario(data: ICriarUsuario) {
-    const usuarioCriado = await Usuario.create(data);
-
-    delete usuarioCriado.senha;
-
-    return usuarioCriado;
+    return await Usuario.create(data);
   }
 
   static async atualizarUsuario(id: string, data: Partial<ICriarUsuario>): Promise<IUsuario | null> {
