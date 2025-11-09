@@ -6,9 +6,9 @@ export default class UsuarioRepository {
   static async criarUsuario(data: ICriarUsuario) {
     const usuarioCriado = await Usuario.create(data);
 
-    const { senha, ...restReturnUserData } = usuarioCriado;
+    delete usuarioCriado.senha;
 
-    return restReturnUserData;
+    return usuarioCriado;
   }
 
   static async atualizarUsuario(id: string, data: Partial<ICriarUsuario>): Promise<IUsuario | null> {

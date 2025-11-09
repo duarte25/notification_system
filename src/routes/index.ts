@@ -2,7 +2,7 @@ import logRoutes from "../middlewares/logRoutesMiddleware";
 import { Application, Request, Response } from "express";
 import notificacoes from "../routes/NotificacaoRouter";
 import usuarios from "../routes/UsuarioRouter";
-
+import auth from "../routes/AuthRouter";
 
 const routes = (app: Application) => {
 
@@ -13,6 +13,7 @@ const routes = (app: Application) => {
   });
 
   app.use(
+    auth,
     usuarios,
     notificacoes
   );
