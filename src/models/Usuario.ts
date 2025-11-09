@@ -3,9 +3,10 @@ import paginate from "mongoose-paginate-v2";
 
 // Definindo a interface para o tipo de Documento do usuário
 export interface IUsuario extends Document {
-  _id: ObjectId; // Use ObjectId em vez de string, caso o MongoDB esteja usando ObjectId
+  _id: ObjectId;
   nome: string;
   email: string;
+  senha: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -13,6 +14,7 @@ export interface IUsuario extends Document {
 export interface ICriarUsuario extends Document {
   nome: string;
   email: string;
+  senha: string;
 }
 
 // Definindo o esquema para o modelo de usuário
@@ -29,6 +31,12 @@ const usuarioSchema: Schema<IUsuario> = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+    },
+    senha: {
+      type: String,
+      required: true,
+      select: false,
+      minlength: 8,
     },
   },
   {

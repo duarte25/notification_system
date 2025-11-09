@@ -2,6 +2,7 @@ import { ValidationFuncs as v, Validation } from "../middlewares/Validation";
 import Usuario, { ICriarUsuario, IUsuario } from "../models/Usuario";
 import UsuarioRepository from "../Repository/UsuarioRepository";
 import { APIError } from "../utils/wrapException";
+import bcrypt from 'bcryptjs';
 
 export default class UsuarioService {
 
@@ -12,10 +13,13 @@ export default class UsuarioService {
     // Validações
     await val.validate("nome", v.required(), v.trim(), v.validateLength({ max: 50 }));
     await val.validate("email", v.required(), v.email(), v.unique({ model: Usuario, query: { email: usuarioData.email } }));
+    await val.validate("senha", v.required(), v.passwordComplexity());
 
     if (val.anyErrors()) throw new APIError(val.getErrors(), 422);
 
     const sanitizedData = val.getSanitizedBody();
+
+    sanitizedData.senha = bcrypt.hashSync(sanitizedData.senha)
 
     const newUser = await UsuarioRepository.criarUsuario(sanitizedData);
 
