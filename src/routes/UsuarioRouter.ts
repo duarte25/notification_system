@@ -8,7 +8,7 @@ const router = express.Router();
 router
   .get("/users", AuthMiddleware, wrapException(UsuarioController.listarUsuario))
   .get("/users/:id", AuthMiddleware, wrapException(UsuarioController.listarUsuarioID))
-  .post("/users", wrapException(UsuarioController.CriarUsuario))
+  .post("/users", AuthMiddleware, wrapException(UsuarioController.CriarUsuario))
   .patch("/users/:id", AuthMiddleware, wrapException(UsuarioController.alterarUsuario))
   .delete("/users/:id", AuthMiddleware, wrapException(UsuarioController.deletarUsuario));
 

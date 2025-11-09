@@ -12,6 +12,10 @@ declare module 'faker-br' {
     lastName: () => string;
   };
 
+  export const lorem: {
+    sentence: () => string;
+  };
+
   export const internet: {
     email: () => string;
   };

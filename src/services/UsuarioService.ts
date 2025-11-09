@@ -26,8 +26,8 @@ export default class UsuarioService {
     return newUser;
   }
 
-  static async listarUsuarios(params: { nome?: string; email?: string; pagina?: number; limite?: number }) {
-    const { nome, email, pagina = 1, limite = 10 } = params;
+  static async listarUsuarios(params: { nome?: string; email?: string; page?: number; limit?: number }) {
+    const { nome, email, page = 1, limit = 10 } = params;
 
     const filtros: Record<string, any> = {};
 
@@ -42,7 +42,7 @@ export default class UsuarioService {
 
     if (email) filtros.email = email;
 
-    const usuarios = await UsuarioRepository.listarUsuarios(filtros, pagina, limite);
+    const usuarios = await UsuarioRepository.listarUsuarios(filtros, page, limit);
 
     return usuarios;
   }

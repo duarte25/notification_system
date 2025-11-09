@@ -1,12 +1,12 @@
-import Usuario, { ICriarUsuario, IUsuario } from "../models/Usuario";
+import { ICriarUsuario, IUsuario } from "../models/Usuario";
 import UsuarioService from "../services/UsuarioService";
 import { sendResponse } from "../utils/mensagens";
 import { Request, Response } from "express";
 import { paginateOptions } from "./common";
 
 interface QueryParams {
-  pagina?: string;
-  limite?: string;
+  page?: string;
+  limit?: string;
   nome?: string;
   email?: string;
 }
@@ -26,12 +26,12 @@ export default class UsuarioController {
 
   // Método para listar usuários
   static async listarUsuario(req: Request<{}, {}, {}, QueryParams>, res: Response): Promise<Response> {
-    const pagina = parseInt(req.query.pagina ?? "1");
-    const limite = parseInt(req.query.limite ?? paginateOptions.limit.toString());
+    const page = parseInt(req.query.page ?? "1");
+    const limit = parseInt(req.query.limit ?? paginateOptions.limit.toString());
 
     const { nome, email } = req.query;
 
-    const usuarios = await UsuarioService.listarUsuarios({ nome, email, pagina, limite });
+    const usuarios = await UsuarioService.listarUsuarios({ nome, email, page, limit });
 
     return sendResponse(res, 200, {
       data: {
