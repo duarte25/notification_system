@@ -31,6 +31,12 @@ export default class NotificacaoController {
     sendResponse(res, 200, { data: notificacoes });
   }
 
+  static async getContagemNaoLidas(req: Request, res: Response) {
+    const { id } = req.params;
+    const result = await NotificacaoService.getContagemNaoLidas(id);
+    return sendResponse(res, 200, { data: result });
+  }
+
   static async marcarComoLidaNotificacao(req: Request, res: Response) {
     const { id } = req.params;
     const result = await NotificacaoService.marcarComoLidaNotificacao(id)
