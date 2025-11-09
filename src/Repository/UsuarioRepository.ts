@@ -1,5 +1,5 @@
-import { PaginateResult } from "mongoose";
 import Usuario, { ICriarUsuario, IUsuario } from "../models/Usuario";
+import { PaginateResult } from "mongoose";
 
 export default class UsuarioRepository {
 

@@ -41,7 +41,7 @@ notificacaoSchema.index({ nome: "text" }, { default_language: "pt" });
 // Configurações para permitir paginação
 notificacaoSchema.plugin(paginate);
 
-// Criando o modelo de Notificacao com o tipo IUsuario e PaginateModel
+// Criando o modelo de Notificacao com o tipo INotificacao e PaginateModel
 const Notificacao = mongoose.model<INotificacao, PaginateModel<INotificacao>>("Notificacoes", notificacaoSchema);
 
 export default Notificacao;
