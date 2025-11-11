@@ -2,6 +2,7 @@ import authPaths from "../routes/auth.js";
 import { readFile } from "fs/promises";
 import authSchemas from "../schemas/authSchema.js";
 import usuarioSchemas from "../schemas/usuarioSchema.js";
+import usuarioPaths from "../routes/usuario.js";
 
 // para ficar o url certo do swagger sem precisar mudar
 const getServersInCorrectOrder = () => {
@@ -35,6 +36,7 @@ const getSwaggerOptions = () => {
       ],
       paths: {
         ...authPaths,
+        ...usuarioPaths,
       },
       components: {
         securitySchemes: {

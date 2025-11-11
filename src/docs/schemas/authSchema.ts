@@ -21,7 +21,7 @@ const authSchemas = {
         example: "EXEMPLODETOKENEXEMPLODETOKENEXEMPLODETOKENEXEMPLODETOKENEXEMPLODETOKENQUEMLEUECORNOEXEMPLODETOKENEXEMPLODETOKENEXEMPLODETOKENEXEMPLODETOKENEXEMPLODETOKEN"
       },
       usuario: {
-        $ref: "#/components/schemas/UsuarioPopulatedGET"
+        $ref: "#/components/schemas/UsuarioGET"
       }
     }
   },

@@ -1,6 +1,8 @@
 import messages from "../../utils/mensagens";
 
-export const respostaOK = (codigo, description, data) => {
+type HttpCode = keyof typeof messages.httpCodes;
+
+export const respostaOK = (codigo: HttpCode, description: string, data?: any) => {
   if (!data) {
     // por exemplo no delete, não tem retorno
     data = {
@@ -46,57 +48,27 @@ export const respostaOK = (codigo, description, data) => {
   };
 };
 
-export const respostaPaginadaOK = (codigo, description, data) => {
+export const respostaPaginadaOK = (codigo: HttpCode, description: string, data?: any) => {
   if (typeof data !== "object") {
-    data = {
-      $ref: data
-    };
+    data = { $ref: data };
   }
 
   return {
-    ["" + codigo]: {
-      description: description,
+    [String(codigo)]: {
+      description,
       content: {
         "application/json": {
           schema: {
             type: "object",
             properties: {
-              data: {
-                type: "array",
-                items: data
-              },
-              resultados: {
-                type: "integer",
-                example: 1
-              },
-              limite: {
-                type: "integer",
-                example: 16
-              },
-              pagina: {
-                type: "integer",
-                example: 1
-              },
-              totalPaginas: {
-                type: "integer",
-                example: 1
-              },
-              error: {
-                type: "boolean",
-                example: false
-              },
-              code: {
-                type: "integer",
-                example: codigo
-              },
+              data: data, // agora pode ser objeto complexo
+              error: { type: "boolean", example: false },
+              code: { type: "integer", example: codigo },
               message: {
                 type: "string",
                 example: messages.httpCodes[codigo]
               },
-              errors: {
-                type: "array",
-                example: []
-              }
+              errors: { type: "array", example: [] }
             }
           }
         }
