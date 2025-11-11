@@ -128,16 +128,6 @@ const usuarioPaths = {
           }
         }
       ],
-      requestBody: {
-        required: true,
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/UsuarioPATCH"
-            }
-          }
-        }
-      },
       responses: respostaOK(200, "Usuário deletado com sucesso", "#/components/schemas/UsuarioGET")
     }
   },

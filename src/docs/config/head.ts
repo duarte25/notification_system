@@ -3,6 +3,8 @@ import { readFile } from "fs/promises";
 import authSchemas from "../schemas/authSchema.js";
 import usuarioSchemas from "../schemas/usuarioSchema.js";
 import usuarioPaths from "../routes/usuario.js";
+import notificacaoPaths from "../routes/notificacao.js";
+import notificacaoSchemas from "../schemas/notificacaoSchema.js";
 
 // para ficar o url certo do swagger sem precisar mudar
 const getServersInCorrectOrder = () => {
@@ -37,6 +39,7 @@ const getSwaggerOptions = () => {
       paths: {
         ...authPaths,
         ...usuarioPaths,
+        ...notificacaoPaths
       },
       components: {
         securitySchemes: {
@@ -48,7 +51,8 @@ const getSwaggerOptions = () => {
         },
         schemas: {
           ...authSchemas,
-          ...usuarioSchemas
+          ...usuarioSchemas,
+          ...notificacaoSchemas
         }
       },
     },

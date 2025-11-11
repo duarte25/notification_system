@@ -28,7 +28,17 @@ export default class NotificacaoController {
 
     const notificacoes = await NotificacaoService.listarNotificacao({ id, page, limit });
 
-    sendResponse(res, 200, { data: notificacoes });
+    return sendResponse(res, 200, {
+      data: {
+        notificacoes: notificacoes.docs,
+        paginacao: {
+          total: notificacoes.totalDocs,
+          paginas: notificacoes.totalPages,
+          paginaAtual: notificacoes.page,
+          limite: notificacoes.limit,
+        },
+      },
+    });
   }
 
   static async getContagemNaoLidas(req: Request, res: Response) {
