@@ -20,13 +20,22 @@ const notificacaoPaths = {
       responses: respostaOK(201, "Notificação criada com sucesso", "#/components/schemas/NotificacaoGET")
     }
   },
-  "/notifications/{id}": {
+    "/notifications/user/{id}": {
     get: {
       tags: ["Notificações"],
       security: [{ bearerAuth: [] }],
-      summary: "Retorna uma lista de notificações baseado no id do usuário.",
-      description: `Retorna a lista de notificações.`,
+      summary: "Retorna a lista de notificações",
+      description: "Retorna uma lista de notificações baseado no id do usuário.",
       parameters: [
+        {
+          in: "path",
+          name: "id",
+          description: "ID do usuário",
+          required: true,
+          schema: {
+            type: "string"
+          }
+        },
         {
           in: "query",
           name: "page",
@@ -37,7 +46,7 @@ const notificacaoPaths = {
           }
         },
         {
-          name: "limite",
+          name: "limit",
           in: "query",
           description: "Informar o máixmo que será listado por página",
           required: false,
@@ -48,6 +57,8 @@ const notificacaoPaths = {
       ],
       responses: respostaPaginadaOK(200, "Lista de notificação", "#/components/schemas/NotificacaoLista")
     },
+  },
+  "/notifications/{id}": {
     delete: {
       tags: ["Notificações"],
       security: [{ bearerAuth: [] }],
@@ -87,7 +98,7 @@ const notificacaoPaths = {
       responses: respostaOK(200, "Resposta da notificação", "#/components/schemas/NotificacaoGET")
     },
   },
-  "/notifications/{id}/unread": {
+  "/notifications/user/{id}/unread": {
     get: {
       tags: ["Notificações"],
       security: [{ bearerAuth: [] }],

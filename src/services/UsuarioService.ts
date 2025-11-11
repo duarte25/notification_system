@@ -32,15 +32,10 @@ export default class UsuarioService {
     const filtros: Record<string, any> = {};
 
     if (nome) {
-      filtros.$text = {
-        $search: nome,
-        $caseSensitive: false,
-        $diacriticSensitive: false,
-        $language: "pt",
-      };
+      filtros.nome = { $regex: nome, $options: "i" };
     }
 
-    if (email) filtros.email = email;
+    if (email) filtros.email = { $regex: `^${email}`, $options: "i" };
 
     const usuarios = await UsuarioRepository.listarUsuarios(filtros, page, limit);
 

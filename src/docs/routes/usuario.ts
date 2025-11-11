@@ -36,7 +36,7 @@ const usuarioPaths = {
           }
         },
         {
-          name: "limite",
+          name: "limit",
           in: "query",
           description: "Informar o máixmo que será listado por página",
           required: false,
