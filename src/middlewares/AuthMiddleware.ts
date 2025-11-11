@@ -3,10 +3,12 @@ import messages from "../utils/mensagens";
 import jwt from "jsonwebtoken";
 
 interface DecodedToken {
-  id: string;
-  nome: string;
-  email: string;
-  user: string;
+  token: string;
+  usuario: {
+    _id: string;
+    email: string;
+    nome: string;
+  }
 }
 
 declare global {

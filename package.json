@@ -70,6 +70,8 @@
     "@types/node-cron": "^3.0.11",
     "@types/nodemailer": "^6.4.17",
     "@types/supertest": "^6.0.3",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "@types/tmp": "^0.2.6",
     "babel-jest": "^30.0.2",
     "babel-plugin-transform-import-meta": "^2.3.3",

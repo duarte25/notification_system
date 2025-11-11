@@ -5,7 +5,7 @@ export default class AuthRepository {
     return await Usuario.findOne(
       { email },
       {
-        id: 1, nome: 1, email: 1, senha: 1,
+        _id: 1, nome: 1, email: 1, senha: 1,
       }
     ).lean();
   }

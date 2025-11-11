@@ -16,6 +16,7 @@ export default class AuthService {
 
     // Verificar se o usuário existe no banco
     const userExist = await AuthRepository.findUserByEmail(email);
+
     if (!userExist) {
       throw new APIError("Usuário ou senha incorretos!");
     }
@@ -44,7 +45,7 @@ export default class AuthService {
     // Gerar token JWT
     const token = jwt.sign(
       {
-        id: userExist.id,
+        _id: userExist._id,
         nome: userExist.nome,
         email: userExist.email,
       },
@@ -54,8 +55,8 @@ export default class AuthService {
 
     return {
       token,
-      user: {
-        id: userExist.id,
+      usuario: {
+        _id: userExist._id,
         nome: userExist.nome,
         email: userExist.email
       },
