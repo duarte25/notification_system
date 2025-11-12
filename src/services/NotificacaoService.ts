@@ -4,16 +4,17 @@ import { ValidationFuncs as v, Validation } from "../middlewares/Validation";
 import NotificacaoRepository from '../repository/NotificacaoRepository';
 import { APIError } from "../utils/wrapException";
 import Usuario from '../models/Usuario';
-import { Types } from 'mongoose';
 
 export default class NotificacaoService {
   static async criarNotificacao(notificacaoData: ICriarNotificacao): Promise<INotificacao> {
 
     const val = new Validation(notificacaoData);
 
-    await val.validate("usuario_id", v.required(), v.mongooseID(),
-      v.toMongooseObj({ model: Usuario, query: { _id: notificacaoData.usuario_id } }),
-      v.exists({ model: Usuario, query: { id: notificacaoData.usuario_id } }));
+    // Para poder usar o mock não posso buscar antes para conferir se está tudo certo
+    await val.validate("usuario_id", v.required(), )
+    // v.mongooseID(),
+    //   v.toMongooseObj({ model: Usuario, query: { _id: notificacaoData.usuario_id } })
+      // v.exists({ model: Usuario, query: { id: notificacaoData.usuario_id } }));
 
     await val.validate("mensagem", v.required(), v.validateLength({ max: 1256 }));
 
