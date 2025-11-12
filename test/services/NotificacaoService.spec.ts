@@ -1,45 +1,84 @@
 import { jest } from '@jest/globals';
 
-// 1. Mantenha a definição do mock aqui no topo
 jest.unstable_mockModule('../../src/repository/NotificacaoRepository', () => ({
-  default: { criarNotificacao: jest.fn() },
+  default: {
+    criarNotificacao: jest.fn(),
+    marcarComoLidaNotificacao: jest.fn(),
+    getContagemNaoLidas: jest.fn(),
+    listarNotificacao: jest.fn(),
+    deletarNotificacao: jest.fn(), 
+  },
 }));
-
-// 2. Remova os 'await import' daqui
+jest.unstable_mockModule('../../src/models/Notificacao', () => ({ default: { findById: jest.fn() } }));
 
 describe('NotificacaoService.criarNotificacao', () => {
   let NotificacaoRepository: any;
   let NotificacaoService: any;
-  let mockCriarNotificacao: jest.MockedFunction<any>; // Referência para o mock
+  let mockCriarNotificacao: jest.MockedFunction<any>;
 
   beforeEach(async () => {
-    // 3. Importe os módulos AQUI DENTRO (na ordem correta)
-    
-    // Primeiro, importe o repositório JÁ MOCKADO
+    const notificacaoModelModule = await import('../../src/models/Notificacao');
+    const NotificacaoModel = notificacaoModelModule.default;
+
     const repoModule = await import('../../src/repository/NotificacaoRepository');
     NotificacaoRepository = repoModule.default;
 
-    // Segundo, importe o serviço (que agora vai usar o repo mockado)
     const serviceModule = await import('../../src/services/NotificacaoService');
     NotificacaoService = serviceModule.default;
 
-    // 4. Limpe os mocks e pegue a referência da função
-    jest.clearAllMocks(); // Limpa chamadas anteriores
+    jest.clearAllMocks(); 
+    (NotificacaoModel.findById as jest.Mock).mockClear();
+    (NotificacaoRepository.marcarComoLidaNotificacao as jest.Mock).mockClear();
+    (NotificacaoRepository.getContagemNaoLidas as jest.Mock).mockClear();
+    (NotificacaoRepository.listarNotificacao as jest.Mock).mockClear();
+
     mockCriarNotificacao = NotificacaoRepository.criarNotificacao;
   });
 
   test('service cria notificacao valida e chama repository', async () => {
     const dto = { usuario_id: '507f1f77bcf86cd799439011', mensagem: 'ok' } as any;
 
-    // 5. Defina o retorno do mock para ESTE teste
     mockCriarNotificacao.mockResolvedValue(dto);
 
-    // 6. Execute o serviço
     const result = await NotificacaoService.criarNotificacao(dto);
 
-    // 7. Faça as asserções
     expect(mockCriarNotificacao).toHaveBeenCalledTimes(1);
-    expect(mockCriarNotificacao).toHaveBeenCalledWith(dto); // Boa prática
+    expect(mockCriarNotificacao).toHaveBeenCalledWith(dto);
     expect(result).toEqual(dto);
+  });
+});
+
+describe('NotificacaoService.marcarComoLidaNotificacao', () => {
+  let NotificacaoService: any;
+  let NotificacaoRepository: any;
+  let NotificacaoModel: any;
+
+  beforeEach(async () => {
+    const repoModule = await import('../../src/repository/NotificacaoRepository');
+    NotificacaoRepository = repoModule.default;
+
+    const serviceModule = await import('../../src/services/NotificacaoService');
+    NotificacaoService = serviceModule.default;
+
+    const modelModule = await import('../../src/models/Notificacao');
+    NotificacaoModel = modelModule.default; 
+
+    jest.clearAllMocks();
+  });
+
+  it('deve marcar uma notificação como lida e chamar o repositório', async () => {
+    const notificacaoId = '60c72b2f9b1e8a001f8e4d2a';
+    const notificacaoMock = { id: notificacaoId } as any;
+    const notificacaoAtualizadaMock = { id: notificacaoId };
+
+    NotificacaoModel.findById.mockResolvedValue(notificacaoMock);
+
+    NotificacaoRepository.marcarComoLidaNotificacao.mockResolvedValue(notificacaoAtualizadaMock);
+
+    const result = await NotificacaoService.marcarComoLidaNotificacao(notificacaoId);
+
+    expect(NotificacaoModel.findById).toHaveBeenCalledWith(notificacaoId);
+    expect(NotificacaoRepository.marcarComoLidaNotificacao).toHaveBeenCalledWith(notificacaoId);
+    expect(result).toEqual(notificacaoAtualizadaMock);
   });
 });
