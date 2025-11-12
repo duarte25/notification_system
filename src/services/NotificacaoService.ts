@@ -1,9 +1,10 @@
 
 import Notificacao, { ICriarNotificacao, INotificacao } from '../models/Notificacao';
 import { ValidationFuncs as v, Validation } from "../middlewares/Validation";
-import NotificacaoRepository from '../Repository/NotificacaoRepository';
+import NotificacaoRepository from '../repository/NotificacaoRepository';
 import { APIError } from "../utils/wrapException";
 import Usuario from '../models/Usuario';
+import { Types } from 'mongoose';
 
 export default class NotificacaoService {
   static async criarNotificacao(notificacaoData: ICriarNotificacao): Promise<INotificacao> {

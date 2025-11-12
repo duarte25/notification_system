@@ -1,5 +1,5 @@
 
-import AuthRepository from "../Repository/AuthRepository";
+import AuthRepository from "../repository/AuthRepository";
 import { APIError } from "../utils/wrapException";
 import jwt, { SignOptions } from "jsonwebtoken";
 import emailValidate from "../utils/mascaras";
