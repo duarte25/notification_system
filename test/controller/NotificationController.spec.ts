@@ -74,7 +74,6 @@ describe('NotificacaoController.marcarComoLidaNotificacao', () => {
   it('deve marcar a notificação como lida e retornar status 200', async () => {
     const mockResult = { id: req.params!.id, lida: true };
 
-    // 🔸 Define o tipo e o comportamento do mock
     const mockMarcarComoLida = NotificacaoService
       .marcarComoLidaNotificacao as unknown as jest.MockedFunction<
       (id: string) => Promise<any>
@@ -82,13 +81,10 @@ describe('NotificacaoController.marcarComoLidaNotificacao', () => {
 
     mockMarcarComoLida.mockResolvedValue(mockResult);
 
-    // 🔸 Executa o controller
     await NotificacaoController.marcarComoLidaNotificacao(req as Request, res as Response);
 
-    // 🔸 Verifica se chamou o service corretamente
     expect(mockMarcarComoLida).toHaveBeenCalledWith(req.params!.id);
 
-    // 🔸 Verifica se a resposta foi enviada corretamente
     expect(sendResponse).toHaveBeenCalledWith(res, 200, { data: mockResult });
   });
 });

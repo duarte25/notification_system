@@ -15,4 +15,4 @@ RUN npm run build
 EXPOSE 3020
 
 # Ponto de partida
-CMD ["npm", "start"] 
+CMD ["sh", "-c", "npm run seed && npm start"]
